@@ -83,7 +83,7 @@
   (format pusher-client-api-url
           (if is-secure "wss" "ws")
           (oref client host)
-          (if is-secure 433 80)
+          (if is-secure 443 80)
           (pusher-client--create-path client)))
 
 (defun pusher-client--create-path (client)

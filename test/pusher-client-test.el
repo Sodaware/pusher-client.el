@@ -18,3 +18,8 @@
   (let ((client (pusher-client-create "KEY")))
     (should (string= "ws://ws.pusherapp.com:80/app/KEY?client=pusher-client.el&version=0.1&protocol=6"
                      (pusher-client--create-uri client)))))
+
+(ert-deftest pusher-client-test/can-create-secure-uri ()
+  (let ((client (pusher-client-create "KEY")))
+    (should (string= "wss://ws.pusherapp.com:443/app/KEY?client=pusher-client.el&version=0.1&protocol=6"
+                     (pusher-client--create-uri client t)))))
