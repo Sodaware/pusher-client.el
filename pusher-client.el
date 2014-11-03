@@ -4,7 +4,7 @@
 
 ;; Author: Phil Newton <phil@sodaware.net>
 ;; Version: 0.1.0
-;; Package-Requires: ((json "1.2"))
+;; Package-Requires: ((json "1.2") (websocket "1.3"))
 ;; Keywords: pusher api websockets
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -34,6 +34,16 @@
 (defvar url-http-end-of-headers)
 
 ;; Configuration
+
+;; Client
+
+(defclass pusher-client ()
+  ((host :init-arg :host)
+   (key :init-arg :key)
+   (secret :init-arg :secret)
+   (user-data :init-arg :user-data)
+   (channels :init-arg :channels))
+  "A Pusher client")
 
 
 (provide 'pusher-client)
