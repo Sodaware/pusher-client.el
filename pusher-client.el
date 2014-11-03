@@ -47,13 +47,19 @@
    (secret :init-arg :secret)
    (user-data :init-arg :user-data)
    (channels :init-arg :channels)
-   (connection :init-arg :connection))
+   (connection :init-arg :connection)
+   (protocol-version :init-arg :protocol-version)
+   (user-agent :init-arg :user-agent)
+   (client-version :init-arg :client-version))
   "A Pusher client")
 
 (defun pusher-client-create (app-key &optional secret)
   "Create a new client for APP-KEY."
   (let ((client (make-instance 'pusher-client)))
     (oset client key app-key)
+    (oset client user-agent "pusher-client.el")
+    (oset client protocol-version "6")
+    (oset client client-version "0.1")
     client))
 
 (defmethod pusher-client-connect ((this pusher-client))
@@ -78,8 +84,11 @@
 
 (defun pusher-client--create-path (client)
   "Create the path for CLIENT."
-  (format pusher-client-api-path key client version protocol)
-  )
+  (format pusher-client-api-path
+          (oref client key)
+          (oref client user-agent)
+          (oref client client-version)
+          (oref client protocol-version)))
 
 
 (provide 'pusher-client)
