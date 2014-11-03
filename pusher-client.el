@@ -35,8 +35,8 @@
 
 ;; Configuration
 
+(defconst pusher-client-api-url "%s://%s:%s%s")
 (defconst pusher-client-api-path "/app/%s?client=%s&version=%s&protocol=%s")
-(defconst pusher-client-api-host "%s://%s:%s%s")
 
 
 ;; Client
@@ -57,6 +57,7 @@
   "Create a new client for APP-KEY."
   (let ((client (make-instance 'pusher-client)))
     (oset client key app-key)
+    (oset client host "ws.pusherapp.com")
     (oset client user-agent "pusher-client.el")
     (oset client protocol-version "6")
     (oset client client-version "0.1")
@@ -77,10 +78,13 @@
 (defmethod pusher-client-get-channel ((this pusher-client) channel)
   "Get CHANNEL object.")
 
-(defun pusher-client--create-uri (client key is-secure)
-  "Create a URI for CLIENT with KEY and optional IS-SECURE prefix."
-  
-  )
+(defun pusher-client--create-uri (client &optional is-secure)
+  "Create a URI for CLIENT with optional IS-SECURE prefix."
+  (format pusher-client-api-url
+          (if is-secure "wss" "ws")
+          (oref client host)
+          (if is-secure 433 80)
+          (pusher-client--create-path client)))
 
 (defun pusher-client--create-path (client)
   "Create the path for CLIENT."

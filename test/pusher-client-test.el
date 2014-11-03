@@ -13,3 +13,8 @@
   (let ((client (pusher-client-create "KEY")))
     (should (string= "/app/KEY?client=pusher-client.el&version=0.1&protocol=6"
                      (pusher-client--create-path client)))))
+
+(ert-deftest pusher-client-test/can-create-none-secure-uri ()
+  (let ((client (pusher-client-create "KEY")))
+    (should (string= "ws://ws.pusherapp.com:80/app/KEY?client=pusher-client.el&version=0.1&protocol=6"
+                     (pusher-client--create-uri client)))))
