@@ -35,6 +35,10 @@
 
 ;; Configuration
 
+(defconst pusher-client-api-path "/app/%s?client=%s&version=%s&protocol=%s")
+(defconst pusher-client-api-host "%s://%s:%s%s")
+
+
 ;; Client
 
 (defclass pusher-client ()
@@ -45,6 +49,12 @@
    (channels :init-arg :channels)
    (connection :init-arg :connection))
   "A Pusher client")
+
+(defun pusher-client-create (app-key &optional secret)
+  "Create a new client for APP-KEY."
+  (let ((client (make-instance 'pusher-client)))
+    (oset client key app-key)
+    client))
 
 (defmethod pusher-client-connect ((this pusher-client))
   "Connect to the pusher server.")
@@ -60,6 +70,17 @@
 
 (defmethod pusher-client-get-channel ((this pusher-client) channel)
   "Get CHANNEL object.")
+
+(defun pusher-client--create-uri (client key is-secure)
+  "Create a URI for CLIENT with KEY and optional IS-SECURE prefix."
+  
+  )
+
+(defun pusher-client--create-path (client)
+  "Create the path for CLIENT."
+  (format pusher-client-api-path key client version protocol)
+  )
+
 
 (provide 'pusher-client)
 ;;; pusher-client.el ends here
