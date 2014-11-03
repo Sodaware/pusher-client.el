@@ -42,9 +42,24 @@
    (key :init-arg :key)
    (secret :init-arg :secret)
    (user-data :init-arg :user-data)
-   (channels :init-arg :channels))
+   (channels :init-arg :channels)
+   (connection :init-arg :connection))
   "A Pusher client")
 
+(defmethod pusher-client-connect ((this pusher-client))
+  "Connect to the pusher server.")
+
+(defmethod pusher-client-disconnect ((this pusher-client))
+  "Disconnect from the pusher server.")
+
+(defmethod pusher-client-subscribe ((this pusher-client) channel)
+  "Subscribe to CHANNEL.")
+
+(defmethod pusher-client-unsubscribe ((this pusher-client) channel)
+  "Unscubscribe from CHANNEL.")
+
+(defmethod pusher-client-get-channel ((this pusher-client) channel)
+  "Get CHANNEL object.")
 
 (provide 'pusher-client)
 ;;; pusher-client.el ends here
